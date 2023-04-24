@@ -11,11 +11,19 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { BusinessException } from 'src/common/exceptions/business.exception';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly configServer: ConfigService,
+  ) {}
 
+  @Get('getname')
+  getname() {
+    return this.configServer.get('TEST_VALUE').name;
+  }
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
