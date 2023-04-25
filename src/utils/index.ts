@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { GetAttributes } from 'src/types/method';
 import { parse } from 'yaml';
 const path = require('path');
 const fs = require('fs');
@@ -15,4 +16,36 @@ export const getConfig = () => {
   const file = fs.readFileSync(yamlPath, 'utf-8');
   const config = parse(file);
   return config;
+};
+
+// 过滤掉数组中不想要的元素，或者选出想要的元素
+export const objFilter = <T>(
+  obj: any,
+  strs: GetAttributes<T>,
+  flag = false,
+) => {
+  // 默认过滤
+  // flag = true 则筛选strs
+  if (flag) {
+    const newObj = {};
+    for (const key of strs) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        newObj[key as string] = obj[key];
+      }
+    }
+    return newObj;
+  }
+  // flag = false 则过滤strs
+  else {
+    const newObj = {};
+    for (const key in obj) {
+      if (
+        Object.prototype.hasOwnProperty.call(obj, key) &&
+        !strs.includes(key as any)
+      ) {
+        newObj[key] = obj[key];
+      }
+    }
+    return newObj;
+  }
 };

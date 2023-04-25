@@ -1,19 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-
+import { CreateUserDto, UpdateUserDto, UserDto } from './dto/user.dto';
+import { Repository } from 'typeorm';
+import { UserEntity } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { objFilter } from 'src/utils';
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
+  ) {}
+  async create(createUserDto: CreateUserDto) {
+    return this.userRepository.save(createUserDto);
   }
-
+  async login(user: UserDto) {
+    return '登录成功';
+  }
   findAll() {
     return `This action returns all user`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const res = await this.userRepository.findOne({ where: { id } });
+    const result = objFilter<UserEntity>(res, ['create_time', 'update_time']);
+    return result;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

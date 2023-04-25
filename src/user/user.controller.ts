@@ -8,52 +8,37 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { BusinessException } from 'src/common/exceptions/business.exception';
-import { ConfigService } from '@nestjs/config';
+import { CreateUserDto, UpdateUserDto, UserDto } from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly configServer: ConfigService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
-  @Get('getname')
-  getname() {
-    return this.configServer.get('TEST_VALUE').name;
+  /** 创建用户接口 */
+  @Post('register')
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.create(createUserDto);
   }
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  /** 登录接口 */
+  @Post('login')
+  async login(@Body() user: UserDto) {
+    return this.userService.login(user);
   }
-
+  /** 获得用户接口 */
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.userService.findOne(+id);
   }
 
+  /** 更新用户 */
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }
 
+  /** 函数用户 */
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
-  }
-
-  @Get('finderror')
-  finderror() {
-    const a: any = {};
-    try {
-      console.log('hahaha');
-
-      console.log(a.b.c);
-    } catch (error) {
-      throw new BusinessException('你这个参数有错');
-    }
-    return this.userService.findAll();
   }
 }

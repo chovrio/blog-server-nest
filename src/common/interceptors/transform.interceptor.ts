@@ -19,11 +19,11 @@ export class TransformInterceptor<T>
   ): Observable<Response<T>> {
     return next.handle().pipe(
       map((data) => ({
-        data,
         status: 0,
-        extra: {},
         message: 'success',
         success: true,
+        data,
+        extra: {},
       })),
     );
   }

@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { getConfig } from './utils';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { MYSQL_DATABASE_CONFIG } from './common/database/database.providers';
+import { GradeModule } from './grade/grade.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,6 +15,10 @@ import { getConfig } from './utils';
       load: [getConfig],
     }),
     UserModule,
+    TypeOrmModule.forRoot({
+      ...MYSQL_DATABASE_CONFIG,
+    }),
+    GradeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

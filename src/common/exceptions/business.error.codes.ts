@@ -9,4 +9,10 @@ export const BUSINESS_ERROR_CODE = {
   PERMISSION_DISABLED: 10004,
   // 用户已冻结
   USER_DISABLED: 10005,
+  // 用户名不存在
+  USERNAME_NOT_EXIST: 10006,
+  // 密码不存在
+  PASSWORD_NOT_EXIST: 10007,
+  // 用户名重复
+  USER_EXIST: 10008,
 };
