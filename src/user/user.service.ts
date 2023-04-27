@@ -11,7 +11,10 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
   async create(createUserDto: CreateUserDto) {
-    return this.userRepository.save(createUserDto);
+    const user = this.userRepository.create(createUserDto);
+    console.log(user);
+    console.log(createUserDto);
+    return await this.userRepository.save(user);
   }
   async login(user: UserDto) {
     return '登录成功';
