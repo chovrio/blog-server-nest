@@ -13,6 +13,8 @@ export const BUSINESS_ERROR_CODE = {
   USERNAME_NOT_EXIST: 10006,
   // 密码不存在
   PASSWORD_NOT_EXIST: 10007,
+  // 密码错误
+  PASSWORD_ERROR: 10008,
   // 用户名重复
-  USER_EXIST: 10008,
+  USER_EXIST: 10009,
 };

@@ -35,8 +35,6 @@ export class UserEntity {
   @BeforeInsert()
   async encryptPwd() {
     const salt = await bcrypt.genSaltSync(SALT_WORK_FACTOR);
-    const npwd = bcrypt.hashSync(this.password, salt);
-    this.password = npwd;
-    console.log(this.password);
+    this.password = bcrypt.hashSync(this.password, salt);
   }
 }
