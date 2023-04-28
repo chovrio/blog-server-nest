@@ -31,7 +31,7 @@ export class RegistoryMiddleWare implements NestMiddleware {
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
   ) {}
-  async use(req: any, res: any, next: (error?: any) => void) {
+  async use(req: Request, res: Response, next: NextFunction) {
     const { name } = req.body;
     const person = await this.userRepository.findOne({ where: { name } });
     if (person) {

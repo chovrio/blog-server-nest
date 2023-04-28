@@ -8,10 +8,22 @@ import {
   LoginMiddleWare,
   RegistoryMiddleWare,
 } from './user.middleware';
+import { JwtModule } from '@nestjs/jwt';
+import { getConfig } from 'src/utils';
+import { JwtStrategy } from 'src/common/jwt.strategy';
+const { JWT_SECRET } = getConfig();
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity]),
+    JwtModule.register({
+      secret: JWT_SECRET.value,
+      signOptions: {
+        expiresIn: '30d',
+      },
+    }),
+  ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, JwtStrategy],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

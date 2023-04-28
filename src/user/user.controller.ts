@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dto/user.dto';
+import { UserEntity } from './entities/user.entity';
+import { objFilter } from 'src/utils';
 
 @Controller('user')
 export class UserController {
@@ -26,8 +28,9 @@ export class UserController {
   }
   /** 获得用户接口 */
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.userService.findOne(+id);
+  async findOne(@Param('id') info: string) {
+    const res = await this.userService.findOne(info, true);
+    return objFilter<UserEntity>(res, ['create_time', 'update_time']);
   }
 
   /** 更新用户 */

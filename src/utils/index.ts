@@ -19,6 +19,13 @@ export const getConfig = () => {
 };
 
 // 过滤掉数组中不想要的元素，或者选出想要的元素
+/**
+ *
+ * @param obj 需要过滤的对象
+ * @param strs 需要过滤(筛选)的属性
+ * @param flag 标识是过滤还是筛选 默认false过滤 ，true筛选
+ * @returns
+ */
 export const objFilter = <T>(
   obj: any,
   strs: GetAttributes<T>,

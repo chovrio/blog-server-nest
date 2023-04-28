@@ -4,27 +4,54 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { objFilter } from 'src/utils';
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
+    private readonly userRepository: Repository<UserEntity>,
+    private readonly jwtService: JwtService,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const user = this.userRepository.create(createUserDto);
     return await this.userRepository.save(user);
   }
   async login(user: UserDto) {
-    return '登录成功';
+    const { name } = user;
+    const p = await this.userRepository.findOne({ where: { name } });
+    const person = objFilter<UserEntity>(p, [
+      'create_time',
+      'update_time',
+      'password',
+    ]);
+    const token = this.jwtService.sign(person);
+    return {
+      user: person,
+      token,
+      message: '登录成功',
+    };
   }
   findAll() {
     return `This action returns all user`;
   }
 
-  async findOne(id: number) {
-    const res = await this.userRepository.findOne({ where: { id } });
-    const result = objFilter<UserEntity>(res, ['create_time', 'update_time']);
-    return result;
+  /**
+   *
+   * @param info 查询信息
+   * @param flag 默认false标识id查询，为ture则是姓名查询
+   * @returns
+   */
+  async findOne(info: string, flag = false) {
+    if (!flag) {
+      return await this.userRepository.findOne({ where: { id: +info } });
+    } else {
+      const res = await this.userRepository.findOne({ where: { name: info } });
+      return objFilter<UserEntity>(res, [
+        'create_time',
+        'update_time',
+        'password',
+      ]);
+    }
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

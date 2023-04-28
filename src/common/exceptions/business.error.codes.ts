@@ -17,4 +17,6 @@ export const BUSINESS_ERROR_CODE = {
   PASSWORD_ERROR: 10008,
   // 用户名重复
   USER_EXIST: 10009,
+  // token过期
+  TOKEN_EXPIRED: 10010,
 };
