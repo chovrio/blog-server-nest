@@ -31,5 +31,6 @@ export class UserModule implements NestModule {
       .apply(InfoMiddleWare, RegistoryMiddleWare)
       .forRoutes('user/registory');
     consumer.apply(InfoMiddleWare, LoginMiddleWare).forRoutes('user/login');
+    consumer.apply(RegistoryMiddleWare).forRoutes('user/register');
   }
 }

@@ -15,6 +15,8 @@ import { GradeModule } from './grade/grade.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './common/jwt.strategy';
 import { AuthMiddleWare } from './app.middleware';
+import { DemoModule } from './demo/demo.module';
+import { ArticleModule } from './article/article.module';
 
 const { JWT_SECRET } = getConfig();
 @Module({
@@ -35,6 +37,8 @@ const { JWT_SECRET } = getConfig();
     }),
     UserModule,
     GradeModule,
+    DemoModule,
+    ArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
@@ -44,6 +48,7 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthMiddleWare)
       .exclude({ path: 'user/login', method: RequestMethod.POST })
+      .exclude({ path: 'user/register', method: RequestMethod.POST })
       .forRoutes('*');
   }
 }
