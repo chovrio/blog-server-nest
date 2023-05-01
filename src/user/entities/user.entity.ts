@@ -4,15 +4,19 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import { SALT_WORK_FACTOR } from 'src/common/constants';
+import { ArticleEntity } from 'src/article/entities/article.entity';
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string; // 标记为主链，值自动生成
   @Column({ length: 20 })
+  @OneToOne(() => ArticleEntity, (article) => article.author)
   @Unique([])
   name: string; // 用户名 唯一
   @Column({ length: 100 })
@@ -26,6 +30,9 @@ export class UserEntity {
   role: string; // 用户等级
   @Column({ default: 'default.png' })
   avactor: string; // 头像
+
+  @OneToMany(() => ArticleEntity, (article) => article.author)
+  articles: ArticleEntity[];
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_time: Date; // 创建时间
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

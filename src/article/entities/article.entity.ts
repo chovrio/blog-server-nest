@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from 'src/user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('article')
 /** */
@@ -9,9 +16,6 @@ export class ArticleEntity {
   /** 文章名称 */
   @Column({ length: 20 })
   name: string;
-  /** 作者 */
-  @Column()
-  author: string;
   /** 封面 */
   @Column({ default: '' })
   img: string;
@@ -30,4 +34,9 @@ export class ArticleEntity {
   /** 最后更新时间 */
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   update_time: Date;
+
+  /** 作者 */
+  @ManyToOne(() => UserEntity, (user) => user.articles)
+  @JoinColumn({ name: 'author' })
+  author: UserEntity;
 }

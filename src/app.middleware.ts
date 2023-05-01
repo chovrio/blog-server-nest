@@ -9,6 +9,7 @@ const { JWT_SECRET } = getConfig();
 export class AuthMiddleWare implements NestMiddleware {
   constructor(@Inject(JwtService) private jwtService: JwtService) {}
   async use(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body);
     try {
       const token = req.headers.authorization.replace('Bearer ', '');
       const info = this.jwtService.verify(token, JWT_SECRET.value);
