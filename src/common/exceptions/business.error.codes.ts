@@ -19,4 +19,8 @@ export const BUSINESS_ERROR_CODE = {
   USER_EXIST: 10009,
   // token过期
   TOKEN_EXPIRED: 10010,
+
+  /** 文章模块的错误 */
+  // 文章参数不全
+  ARTICLE_PARAMS_NOT_COMPLETE: 10011,
 };

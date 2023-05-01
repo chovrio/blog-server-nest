@@ -44,7 +44,7 @@ export class UserService {
    */
   async findOne(info: string, flag = false) {
     if (!flag) {
-      return await this.userRepository.findOne({ where: { id: +info } });
+      return await this.userRepository.findOne({ where: { id: info } });
     } else {
       const res = await this.userRepository.findOne({ where: { name: info } });
       return objFilter<UserEntity>(res, [

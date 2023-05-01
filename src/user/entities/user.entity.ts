@@ -4,7 +4,6 @@ import {
   BeforeInsert,
   Column,
   Entity,
-  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -12,7 +11,7 @@ import { SALT_WORK_FACTOR } from 'src/common/constants';
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number; // 标记为主链，值自动生成
+  id: string; // 标记为主链，值自动生成
   @Column({ length: 20 })
   @Unique([])
   name: string; // 用户名 唯一
