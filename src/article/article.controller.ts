@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Request } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/article.dto';
 
@@ -10,7 +10,7 @@ export class ArticleController {
     return this.articleService.test();
   }
   @Post('create')
-  create(article: CreateArticleDto) {
+  create(@Body() article: CreateArticleDto) {
     return this.articleService.create(article);
   }
 }

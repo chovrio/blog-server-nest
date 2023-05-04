@@ -13,7 +13,7 @@ export class ValidateAuthorMiddleware implements NestMiddleware {
   ) {}
   async use(req: Request, res: Response, next: NextFunction) {
     const { author } = req.body;
-    if (author !== (<any>req.authInfo).name) {
+    if (author !== (<any>req.authInfo).id) {
       throw new BusinessException({
         code: BUSINESS_ERROR_CODE.ARTICLE_AUTHOR_ERROR,
         message: '作者名称不符合',

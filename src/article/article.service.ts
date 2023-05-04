@@ -12,8 +12,7 @@ export class ArticleService {
   ) {}
 
   async create(article: CreateArticleDto) {
-    // this.articleRepository.save(article);
-    return '111';
+    return await this.articleRepository.save(article);
   }
   test() {
     return 'test';
