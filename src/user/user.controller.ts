@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, UserDto } from './dto/user.dto';
@@ -19,7 +20,12 @@ export class UserController {
   /** 创建用户接口 */
   @Post('register')
   async create(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.create(createUserDto);
+    const res = await this.userService.create(createUserDto);
+    return objFilter<UserEntity>(res, [
+      'create_time',
+      'update_time',
+      'password',
+    ]);
   }
   /** 登录接口 */
   @Post('login')
@@ -28,9 +34,13 @@ export class UserController {
   }
   /** 获得用户接口 */
   @Get(':id')
-  async findOne(@Param('id') info: string) {
-    const res = await this.userService.findOne(info, true);
-    return objFilter<UserEntity>(res, ['create_time', 'update_time']);
+  async findOne(@Param('id') info: string, @Request() req) {
+    const res = await this.userService.findOne(info);
+    return objFilter<UserEntity>(res, [
+      'create_time',
+      'update_time',
+      'password',
+    ]);
   }
 
   /** 更新用户 */

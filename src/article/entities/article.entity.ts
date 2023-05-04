@@ -36,7 +36,7 @@ export class ArticleEntity {
   update_time: Date;
 
   /** 作者 */
-  @ManyToOne(() => UserEntity, (user) => user.articles)
+  @ManyToOne(() => UserEntity, (user) => user.id)
   @JoinColumn({ name: 'author' })
-  author: UserEntity;
+  author: string;
 }

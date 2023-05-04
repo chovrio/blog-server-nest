@@ -23,4 +23,6 @@ export const BUSINESS_ERROR_CODE = {
   /** 文章模块的错误 */
   // 文章参数不全
   ARTICLE_PARAMS_NOT_COMPLETE: 10011,
+  // 文章作者错误
+  ARTICLE_AUTHOR_ERROR: 10012,
 };

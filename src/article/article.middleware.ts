@@ -13,11 +13,12 @@ export class ValidateAuthorMiddleware implements NestMiddleware {
   ) {}
   async use(req: Request, res: Response, next: NextFunction) {
     const { author } = req.body;
-    if (!author) {
+    if (author !== (<any>req.authInfo).name) {
       throw new BusinessException({
-        code: BUSINESS_ERROR_CODE.ACCESS_FORBIDDEN,
-        message: '作者不存在',
+        code: BUSINESS_ERROR_CODE.ARTICLE_AUTHOR_ERROR,
+        message: '作者名称不符合',
       });
     }
+    next();
   }
 }

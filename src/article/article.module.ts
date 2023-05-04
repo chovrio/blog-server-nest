@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BasicValidateMiddleware } from 'src/middleware/basic.middleware';
 import { ArticleController } from './article.controller';
+import { ValidateAuthorMiddleware } from './article.middleware';
 import { ArticleService } from './article.service';
 import { ArticleEntity } from './entities/article.entity';
 
@@ -19,6 +20,7 @@ export class ArticleModule implements NestModule {
           author: '请传入文章作者',
           content: '请输入文章内容',
         }),
+        ValidateAuthorMiddleware,
       )
       .forRoutes('article/create');
   }

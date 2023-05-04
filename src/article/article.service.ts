@@ -12,6 +12,7 @@ export class ArticleService {
   ) {}
 
   async create(article: CreateArticleDto) {
+    // this.articleRepository.save(article);
     return '111';
   }
   test() {

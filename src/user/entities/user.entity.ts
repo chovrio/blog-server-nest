@@ -31,8 +31,8 @@ export class UserEntity {
   @Column({ default: 'default.png' })
   avactor: string; // 头像
 
-  @OneToMany(() => ArticleEntity, (article) => article.author)
-  articles: ArticleEntity[];
+  // @OneToMany(() => ArticleEntity, (article) => article.author)
+  // articles: ArticleEntity[];
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   create_time: Date; // 创建时间
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
