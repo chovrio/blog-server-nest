@@ -16,6 +16,10 @@ export class ArticleService {
     const result = await this.articleRepository.save(article);
     return objFilter<ArticleEntity>(result, ['create_time', 'update_time']);
   }
+  async patch(id: string, content) {
+    await this.articleRepository.update({ id }, { ...content });
+    return '文章更新成功';
+  }
   async delete(id: string) {
     await this.articleRepository.delete({ id });
     return '文章删除成功';

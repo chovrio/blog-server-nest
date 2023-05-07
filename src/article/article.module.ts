@@ -34,5 +34,8 @@ export class ArticleModule implements NestModule {
     consumer
       .apply(ValidateArticleMiddleware)
       .forRoutes({ path: 'article/:id', method: RequestMethod.DELETE });
+    consumer
+      .apply(ValidateArticleMiddleware)
+      .forRoutes({ path: 'article', method: RequestMethod.PATCH });
   }
 }
