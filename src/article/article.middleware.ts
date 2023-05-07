@@ -22,3 +22,21 @@ export class ValidateAuthorMiddleware implements NestMiddleware {
     next();
   }
 }
+
+export class ValidateArticleMiddleware implements NestMiddleware {
+  constructor(
+    @InjectRepository(ArticleEntity)
+    private readonly articleRepository: Repository<ArticleEntity>,
+  ) {}
+  async use(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const article = await this.articleRepository.findOne({ where: { id } });
+    if (article === null) {
+      throw new BusinessException({
+        code: BUSINESS_ERROR_CODE.ARTICLE_NOT_EXIST,
+        message: '文章不存在',
+      });
+    }
+    next();
+  }
+}

@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Req, Request } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Req,
+  Request,
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/article.dto';
 
@@ -12,5 +21,9 @@ export class ArticleController {
   @Post('create')
   create(@Body() article: CreateArticleDto) {
     return this.articleService.create(article);
+  }
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.articleService.delete(id);
   }
 }
